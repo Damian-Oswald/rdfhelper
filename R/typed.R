@@ -1,0 +1,25 @@
+#' Construct a Typed RDF Literal
+#'
+#' This helper constructs a typed RDF literal, associating a string value with a specific XML Schema datatype (`xsd`).
+#'
+#' Supported datatypes are: `"string"`, `"integer"`, `"decimal"`, `"boolean"`, `"date"`, `"dateTime"`.
+#'
+#' @param x Character or numeric value. The content to be typed.
+#' @param datatype Character string. The XML Schema datatype (e.g., `"string"`, `"integer"`). Must be provided.
+#'
+#' @return A formatted RDF typed literal.
+#'
+#' @examples
+#' typed("42", "integer")
+#' typed("true", "boolean")
+#' typed("2025-03-30", "date")
+#'
+#' @export
+typed <- function(x, datatype = NULL) {
+    allowed_types <- c("string", "integer", "decimal", "boolean", "date", "dateTime")
+    if (is.null(datatype)) stop("A datatype must be provided.")
+    if (!datatype %in% allowed_types) {
+        stop(sprintf("Datatype must be one of: %s", paste(allowed_types, collapse = ", ")))
+    }
+    sprintf('%s^^<http://www.w3.org/2001/XMLSchema#%s>', literal(x), datatype)
+}
