@@ -14,5 +14,5 @@
 #'
 #' @export
 triple <- function(subject, predicate, object) {
-    sprintf('%s %s %s .', subject, predicate, object)
+    sprintf('\n%s %s %s .', subject, predicate, object)
 }
