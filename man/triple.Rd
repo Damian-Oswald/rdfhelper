@@ -4,7 +4,7 @@
 \alias{triple}
 \title{Construct an RDF Triple Statement}
 \usage{
-triple(subject, predicate, object)
+triple(subject, predicate, object, return = FALSE)
 }
 \arguments{
 \item{subject}{RDF subject (URI or blank node).}
@@ -12,6 +12,8 @@ triple(subject, predicate, object)
 \item{predicate}{RDF predicate (URI).}
 
 \item{object}{RDF object (URI, literal, or blank node).}
+
+\item{return}{Should the triple be returned (or printed)?}
 }
 \value{
 A formatted RDF triple as a string.

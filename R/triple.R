@@ -5,6 +5,7 @@
 #' @param subject RDF subject (URI or blank node).
 #' @param predicate RDF predicate (URI).
 #' @param object RDF object (URI, literal, or blank node).
+#' @param return Should the triple be returned (or printed)?
 #'
 #' @return A formatted RDF triple as a string.
 #'
@@ -13,6 +14,7 @@
 #' triple(uri("1234", prefix = "https://example.com/"), uri("rdf:type"), uri("https://example.com/Fruit"))
 #'
 #' @export
-triple <- function(subject, predicate, object) {
-    sprintf('\n%s %s %s .', subject, predicate, object)
+triple <- function(subject, predicate, object, return = FALSE) {
+  x = sprintf("%s %s %s .\n", subject, predicate, object)
+  if(return) return(x) else cat(x)
 }
