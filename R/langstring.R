@@ -14,5 +14,6 @@
 #' @export
 langstring <- function(x, lang = NULL) {
     if (is.null(lang)) stop("A language tag ('lang') must be provided.")
-    sprintf('"%s"@%s', x, lang)
+    if (is.null(x) || is.na(x) || x=="") return(NULL)
+    sprintf('"%s"@%s', gsub("\"", "'", as.character(x)), lang)
 }

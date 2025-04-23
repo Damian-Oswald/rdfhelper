@@ -11,5 +11,6 @@
 #'
 #' @export
 literal <- function(x) {
-    sprintf('"%s"', as.character(x))
+    if (is.null(x) || is.na(x) || x=="") return(NULL)
+    sprintf('"%s"', gsub("\"", "'", as.character(x)))
 }

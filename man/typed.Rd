@@ -12,7 +12,8 @@ typed(x, datatype = NULL)
 \item{datatype}{Character string. The XML Schema datatype (e.g., \code{"string"}, \code{"integer"}). Must be provided.}
 }
 \value{
-A formatted RDF typed literal.
+A formatted RDF typed literal. If \code{x} is any of \code{NA}, \code{NULL}, or \code{""}, the return value will be \code{NULL}.
+(To avoid things like \verb{"NA"^^<http://www.w3.org/2001/XMLSchema#integer>} as a result of \code{typed(NA, "integer")})
 }
 \description{
 This helper constructs a typed RDF literal, associating a string value with a specific XML Schema datatype (\code{xsd}).
@@ -24,5 +25,6 @@ Supported datatypes are: \code{"string"}, \code{"integer"}, \code{"decimal"}, \c
 typed("42", "integer")
 typed("true", "boolean")
 typed("2025-03-30", "date")
+typed("", "integer") # this will return `NULL`
 
 }
