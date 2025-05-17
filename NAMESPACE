@@ -2,6 +2,7 @@
 
 export(langstring)
 export(literal)
+export(nano)
 export(sparql)
 export(triple)
 export(typed)
