@@ -14,15 +14,11 @@ include any necessary PREFIX declarations.}
 (e.g. \code{"https://lindas.admin.ch/query"}).}
 }
 \value{
-A single-length character vector holding the CSV-formatted results.
-To convert to a data frame, you can do:
-\verb{r raw_csv <- sparql(q, endpoint) df <- readr::read_csv(raw_csv, show_col_types = FALSE) }
+A tibble holding the results of the query.
 }
 \description{
 Sends a SPARQL \code{SELECT} (or other) query to the specified SPARQL HTTP endpoint,
-requests the results in CSV format, and returns them as a character string.
-You can then parse the CSV (e.g. with \strong{readr}’s \code{read_csv()}) into a data frame
-for further processing.
+requests the results in CSV format, and returns them as a tibble in R.
 }
 \details{
 \itemize{
@@ -50,8 +46,11 @@ ORDER BY DESC(?hazards)
 '
 
 # run it
-sparql(query, "https://lindas.admin.ch/query")
-
+data <- sparql(
+    query = query,
+    endpoint = , "https://lindas.admin.ch/query"
+)
+print(data)
 }
 \seealso{
 \itemize{

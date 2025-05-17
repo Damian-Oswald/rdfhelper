@@ -1,6 +1,6 @@
 Package: rdfhelper
 Title: RDF help
-Version: 0.2
+Version: 0.3
 Authors@R: 
     person("Damian", "Oswald", , "damian.oswald@protonmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "https://orcid.org/0009-0008-0658-7697"))

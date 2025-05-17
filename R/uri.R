@@ -9,6 +9,8 @@
 #' uri("1234", prefix = "https://example.com/")
 #' @export
 uri <- function(x, prefix = NULL) {
-    if(is.null(prefix)) prefix <- ""
-    sprintf("<%s%s>", prefix, x)
+    if(is.null(prefix)) {
+        prefix <- ""
+    }
+    base::sprintf("<%s%s>", prefix, x)
 }

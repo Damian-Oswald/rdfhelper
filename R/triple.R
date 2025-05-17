@@ -15,7 +15,15 @@
 #'
 #' @export
 triple <- function(subject, predicate, object, return = FALSE) {
-  for (i in c(subject, predicate, object)) if(is.na(i) || is.null(i) || i=="") return(NULL)
-  x = sprintf("%s %s %s .\n", subject, predicate, object)
-  if(return) return(x) else cat(x)
+    for (i in c(subject, predicate, object)) {
+        if(rdfhelper:::is.missing(i)) {
+            return(NULL)
+        }
+    }
+    x <- base::sprintf("%s %s %s .\n", subject, predicate, object)
+    if(return) {
+        return(x)
+    } else {
+        base::cat(x)
+    }
 }

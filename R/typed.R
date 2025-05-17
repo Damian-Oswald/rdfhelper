@@ -18,11 +18,19 @@
 #'
 #' @export
 typed <- function(x, datatype = NULL) {
-    allowed_types <- c("string", "integer", "decimal", "boolean", "date", "dateTime")
-    if (is.null(x) || is.na(x) || x=="") return(NULL)
-    if (is.null(datatype)) stop("A datatype must be provided.")
-    if (!datatype %in% allowed_types) {
-        stop(sprintf("Datatype must be one of: %s", paste(allowed_types, collapse = ", ")))
+    allowed_types <- c("string",
+                       "integer",
+                       "decimal",
+                       "boolean",
+                       "date",
+                       "dateTime")
+    if (rdfhelper:::is.missing(x)) {
+        return(NULL)
+    } else if (base::is.null(datatype)) {
+        stop("A datatype must be provided.")
+    } else if (!datatype %in% allowed_types) {
+        stop(base::sprintf("Datatype must be one of: %s", base::paste(allowed_types, collapse = ", ")))
+    } else {
+        return(base::sprintf('%s^^<http://www.w3.org/2001/XMLSchema#%s>', rdfhelper::literal(x), datatype))
     }
-    return(sprintf('%s^^<http://www.w3.org/2001/XMLSchema#%s>', literal(x), datatype))
 }
