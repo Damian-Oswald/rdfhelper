@@ -2,6 +2,11 @@
 
 export(langstring)
 export(literal)
+export(sparql)
 export(triple)
 export(typed)
 export(uri)
+importFrom(httr,POST)
+importFrom(httr,add_headers)
+importFrom(httr,content)
+importFrom(httr,content_type)
