@@ -27,7 +27,11 @@ nano <- function(
         n = 1,
         length = 16,
         prefix = "",
-        characters = c(base::LETTERS, base::letters, 0:9)
+        characters = c(
+            base::LETTERS,
+            base::letters,
+            0:9
+        )
 )
 {
     if (

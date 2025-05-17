@@ -10,7 +10,7 @@
 #' @export
 uri <- function(x, prefix = NULL)
 {
-    if(is.null(prefix))
+    if(base::is.null(prefix))
     {
         prefix <- ""
     }
