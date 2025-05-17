@@ -8,7 +8,7 @@ sparql(query, endpoint)
 }
 \arguments{
 \item{query}{A single string containing a valid SPARQL query.  Make sure to
-include any necessary PREFIX declarations.}
+include any necessary \code{PREFIX} declarations.}
 
 \item{endpoint}{A string giving the full URL of the SPARQL HTTP endpoint
 (e.g. \code{"https://lindas.admin.ch/query"}).}
@@ -22,24 +22,22 @@ requests the results in CSV format, and returns them as a tibble in R.
 }
 \details{
 \itemize{
-\item The function uses \strong{httr}’s \code{POST()} under the hood, setting \code{Accept: text/csv}
-so that the endpoint returns CSV.
-\item Messages from the underlying CSV parser (if you choose to pipe into \code{read_csv()})
-are suppressed by \code{suppressMessages()}.
-\item If you’d rather get a parsed data frame directly, wrap the call in
-\code{readr::read_csv(..., show_col_types = FALSE)}.
+\item The function uses \strong{httr}’s \code{POST(..., encode = "form")} under the hood, which
+automatically URL-encodes your \code{query} parameter and sets the
+\code{Content-Type: application/x-www-form-urlencoded} header.
+\item It also sets \code{Accept: text/csv} so that the endpoint returns CSV.
+\item Messages from the underlying CSV parser are suppressed by \code{suppressMessages()}.
 }
 }
 \examples{
-# build your query string, e.g.:
 query <- '
 PREFIX : <https://agriculture.ld.admin.ch/plant-protection/>
 PREFIX schema: <http://schema.org/>
 SELECT ?name ?wNumber (COUNT(?hCode) AS ?hazards) WHERE {
   ?p a :Product ;
-    schema:name ?name ;
-    :federalAdmissionNumber ?wNumber ;
-    :hasHazardStatement ?hCode .
+     schema:name ?name ;
+     :federalAdmissionNumber ?wNumber ;
+     :hasHazardStatement ?hCode .
 }
 GROUP BY ?name ?wNumber
 ORDER BY DESC(?hazards)
@@ -47,10 +45,11 @@ ORDER BY DESC(?hazards)
 
 # run it
 data <- sparql(
-    query = query,
-    endpoint = , "https://lindas.admin.ch/query"
+  query    = query,
+  endpoint = "https://lindas.admin.ch/query"
 )
 print(data)
+
 }
 \seealso{
 \itemize{
