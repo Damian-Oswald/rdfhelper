@@ -28,21 +28,40 @@ nano <- function(
         length = 16,
         prefix = "",
         characters = c(base::LETTERS, base::letters, 0:9)
-) {
-    if (!base::is.character(prefix) || base::length(prefix) != 1L) {
+)
+{
+    if (
+        !base::is.character(prefix) ||
+        base::length(prefix) != 1L
+    )
+    {
         stop("`prefix` must be a single character string.")
     }
+    
     p <- base::nchar(prefix, type = "chars")
-    if (p >= length) {
+    
+    if (p >= length)
+    {
         stop("`prefix` must be shorter than `length`.")
     }
-    if (!base::is.numeric(n) || base::length(n) != 1L ||
-        n < 1 || n != base::as.integer(n)) {
+    
+    if (
+        !base::is.numeric(n) ||
+        base::length(n) != 1L ||
+        n < 1 ||
+        n != base::as.integer(n)
+    )
+    {
         stop("`n` must be a positive integer scalar.")
     }
-    make_one <- function() {
-        random <- base::sample(characters, size = length - p, replace = TRUE)
-        base::paste(base::c(prefix, random), collapse = "")
-    }
-    base::vapply(seq_len(n), function(i) make_one(), base::character(1))
+    
+    base::vapply(seq_len(n),
+                 function(i) {
+                     base::sample(characters,
+                                  size = length - p,
+                                  replace = TRUE) |>
+                         base::c(prefix, ... = _) |>
+                         base::paste(collapse = "")
+                 },
+                 base::character(1))
 }

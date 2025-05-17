@@ -11,11 +11,11 @@
 #'
 #' @export
 literal <- function(x) {
-    if (rdfhelper:::is.missing(x)) {
+    if (rdfhelper:::is.missing(x))
+    {
         return(NULL)
-    } else {
-        return(
-            base::sprintf('"%s"', rdfhelper:::rm.quotes(x))
-        )
     }
+    x |> 
+        rdfhelper:::rm.quotes() |>
+        base::sprintf('"%s"', ... = _)
 }

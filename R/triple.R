@@ -14,16 +14,30 @@
 #' triple(uri("1234", prefix = "https://example.com/"), uri("rdf:type"), uri("https://example.com/Fruit"))
 #'
 #' @export
-triple <- function(subject, predicate, object, return = FALSE) {
-    for (i in c(subject, predicate, object)) {
-        if(rdfhelper:::is.missing(i)) {
+triple <- function(
+        subject,
+        predicate,
+        object,
+        return = FALSE
+)
+{
+    for (i in c(subject, predicate, object))
+    {
+        if(rdfhelper:::is.missing(i))
+        {
             return(NULL)
         }
     }
-    x <- base::sprintf("%s %s %s .\n", subject, predicate, object)
-    if(return) {
+    x <- base::sprintf("%s %s %s .\n",
+                       subject,
+                       predicate,
+                       object)
+    if(return)
+    {
         return(x)
-    } else {
+    }
+    else
+    {
         base::cat(x)
     }
 }

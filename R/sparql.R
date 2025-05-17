@@ -45,15 +45,14 @@
 #'
 #' @importFrom httr POST add_headers content_type content
 #' @export
-sparql <- function(query, endpoint) {
-    query <- httr::POST(
+sparql <- function(query, endpoint)
+{
+    httr::POST(
         url = endpoint,
         httr::add_headers("Accept" = "text/csv"),
         httr::content_type("application/x-www-form-urlencoded; charset=UTF-8"),
         body = paste("query=", query, sep = "")
-        )
-    base::suppressMessages({
-        data <- httr::content(query, encoding = "UTF-8")
-    })
-    return(data)
+    ) |>
+        httr::content(encoding = "UTF-8") |>
+        base::suppressMessages()
 }

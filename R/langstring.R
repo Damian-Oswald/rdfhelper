@@ -13,12 +13,16 @@
 #'
 #' @export
 langstring <- function(x, lang = NULL) {
-    if (base::is.null(lang)) {
+    if (base::is.null(lang))
+    {
         stop("A language tag ('lang') must be provided.")
     }
-    if (base::is.null(x) || base::is.na(x) || x=="") {
+    if (base::is.null(x) || base::is.na(x) || x=="")
+    {
         return(NULL)
-    } else {
-        return(base::sprintf('"%s"@%s', base::gsub("\"", "'", base::as.character(x)), lang))
     }
+    x |>
+        base::as.character() |>
+        base::sub("\"", "'", x = _) |>
+        base::sprintf('"%s"@%s', ... = _, lang)
 }
