@@ -25,7 +25,7 @@ triple <- function(
 {
     for (i in list(subject, predicate, object))
     {
-        if(rdfhelper:::is.missing(i))
+        if(rdfhelper:::is.missing(head(i, 1)))
         {
             return(NULL)
         }
