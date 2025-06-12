@@ -24,5 +24,7 @@ This helper constructs an RDF triple statement as a formatted string, combining 
 \examples{
 triple(uri("https://example.com/1234"), uri("https://example.com/hasName"), literal("Apple"))
 triple(uri("1234", prefix = "https://example.com/"), uri("rdf:type"), uri("https://example.com/Fruit"))
+triple("https://example.com/1", "https://example.com/2", NULL)
+triple("https://example.com/1", "https://example.com/2", "")
 
 }
