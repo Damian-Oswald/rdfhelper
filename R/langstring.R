@@ -23,6 +23,6 @@ langstring <- function(x, lang = NULL) {
     }
     x |>
         base::as.character() |>
-        base::sub("\"", "'", x = _) |>
+        base::gsub("\"", "'", x = _) |>
         base::sprintf('"%s"@%s', ... = _, lang)
 }
