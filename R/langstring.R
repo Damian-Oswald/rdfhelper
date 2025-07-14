@@ -24,13 +24,14 @@ langstring <- function(x, lang = NULL, multiline = FALSE) {
   }
   s <- x |>
     base::as.character() |>
-    base::gsub("\"", "'", x = _)
+    base::gsub("\"", "'", x = _) # replace internal double quotes
   if (multiline)
   {
     base::sprintf('"""\n%s\n"""@%s', s, lang)
   }
   else
   {
-    base::sprintf('"%s"@%s', s, lang)
+    s <- gsub("[\r\n]+", " ", s) # remove any newline / CR chars
+    sprintf('"%s"@%s', s, lang)
   }
 }
