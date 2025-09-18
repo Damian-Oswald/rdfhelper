@@ -24,7 +24,8 @@ typed <- function(x, datatype = NULL) {
                  "decimal",
                  "boolean",
                  "date",
-                 "dateTime")
+                 "dateTime",
+                 "gYear")
     xsd <- "http://www.w3.org/2001/XMLSchema"
     
     if (rdfhelper:::is.missing(x))
