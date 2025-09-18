@@ -2,7 +2,7 @@
 #'
 #' This helper constructs a typed RDF literal, associating a string value with a specific XML Schema datatype (`xsd`).
 #'
-#' Supported datatypes are: `"string"`, `"integer"`, `"decimal"`, `"boolean"`, `"date"`, `"dateTime"`.
+#' Supported datatypes are: `"string"`, `"integer"`, `"decimal"`, `"boolean"`, `"date"`, `"dateTime"`, `"gYear"`.
 #'
 #' @param x Character or numeric value. The content to be typed.
 #' @param datatype Character string. The XML Schema datatype (e.g., `"string"`, `"integer"`). Must be provided.
