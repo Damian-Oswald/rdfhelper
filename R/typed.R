@@ -1,31 +1,86 @@
 #' Construct a Typed RDF Literal
 #'
-#' This helper constructs a typed RDF literal, associating a string value with a specific XML Schema datatype (`xsd`).
+#' This helper constructs a typed RDF literal, associating a value with any specified
+#' XML Schema datatype (`xsd`). It is generalized to accept any valid XSD datatype string.
 #'
-#' Supported datatypes are: `"string"`, `"integer"`, `"decimal"`, `"boolean"`, `"date"`, `"dateTime"`, `"gYear"`.
+#' @details
+#' Common XSD datatypes include, but are not limited to:
 #'
-#' @param x Character or numeric value. The content to be typed.
-#' @param datatype Character string. The XML Schema datatype (e.g., `"string"`, `"integer"`). Must be provided.
+#' **String Types:**
+#' `string`, `normalizedString`, `token`, `language`, `Name`, `NCName`, `ID`, `IDREF`
 #'
-#' @return A formatted RDF typed literal. If `x` is any of `NA`, `NULL`, or `""`, the return value will be `NULL`.
-#' (To avoid things like `"NA"^^<http://www.w3.org/2001/XMLSchema#integer>` as a result of `typed(NA, "integer")`)
+#' **Numeric Types:**
+#' `decimal`, `integer`, `nonPositiveInteger`, `negativeInteger`, `long`, `int`, `short`, `byte`,
+#' `nonNegativeInteger`, `positiveInteger`, `unsignedLong`, `unsignedInt`, `unsignedShort`,
+#' `unsignedByte`, `double`, `float`
+#'
+#' **Date and Time Types:**
+#' `dateTime`, `dateTimeStamp`, `date`, `time`, `duration`, `gYearMonth`, `gYear`, `gMonthDay`,
+#' `gDay`, `gMonth`
+#'
+#' **Other Types:**
+#' `boolean`, `base64Binary`, `hexBinary`, `anyURI`
+#'
+#' @param x The value to be typed. It will be coerced to a character string.
+#' @param datatype Character string. A valid XML Schema datatype name (e.g., `"string"`, `"integer"`).
+#'   This parameter must be provided.
+#'
+#' @return A formatted RDF typed literal string (e.g., `"42"^^<...#integer>`).
+#'   If `x` is `NA`, `NULL`, or `""`, the function returns `NULL` to avoid creating
+#'   invalid literals.
 #'
 #' @examples
 #' typed("42", "integer")
 #' typed("true", "boolean")
-#' typed("2025-03-30", "date")
-#' typed("", "integer") # this will return `NULL`
+#' typed("2025-09-22", "date")
+#' typed(5.42, "double")
+#' typed("2025-09", "gYearMonth")
+#' typed("", "integer") # Returns NULL
 #'
 #' @export
 typed <- function(x, datatype = NULL) {
     
-    allowed <- c("string",
-                 "integer",
-                 "decimal",
-                 "boolean",
-                 "date",
-                 "dateTime",
-                 "gYear")
+    allowed <- c(
+        "string",
+        "normalizedString",
+        "token",
+        "language",
+        "Name",
+        "NCName",
+        "ID",
+        "IDREF",
+        "decimal",
+        "integer",
+        "nonPositiveInteger",
+        "negativeInteger",
+        "long",
+        "int",
+        "short",
+        "byte",
+        "nonNegativeInteger",
+        "positiveInteger",
+        "unsignedLong",
+        "unsignedInt",
+        "unsignedShort",
+        "unsignedByte",
+        "double",
+        "float",
+        "dateTime",
+        "dateTimeStamp",
+        "date",
+        "time",
+        "duration",
+        "gYearMonth",
+        "gYear",
+        "gMonthDay",
+        "gDay",
+        "gMonth",
+        "boolean",
+        "base64Binary",
+        "hexBinary",
+        "anyURI"
+    )
+    
     xsd <- "http://www.w3.org/2001/XMLSchema"
     
     if (rdfhelper:::is.missing(x))
