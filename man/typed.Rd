@@ -7,24 +7,45 @@
 typed(x, datatype = NULL)
 }
 \arguments{
-\item{x}{Character or numeric value. The content to be typed.}
+\item{x}{The value to be typed. It will be coerced to a character string.}
 
-\item{datatype}{Character string. The XML Schema datatype (e.g., \code{"string"}, \code{"integer"}). Must be provided.}
+\item{datatype}{Character string. A valid XML Schema or GeoSPARQL datatype name (e.g., \code{"string"}, \code{"integer"}, \code{"wktLiteral"}).
+This parameter must be provided.}
 }
 \value{
-A formatted RDF typed literal. If \code{x} is any of \code{NA}, \code{NULL}, or \code{""}, the return value will be \code{NULL}.
-(To avoid things like \verb{"NA"^^<http://www.w3.org/2001/XMLSchema#integer>} as a result of \code{typed(NA, "integer")})
+A formatted RDF typed literal string (e.g., \verb{"42"^^<...#integer>}).
+If \code{x} is \code{NA}, \code{NULL}, or \code{""}, the function returns \code{NULL} to avoid creating
+invalid literals.
 }
 \description{
-This helper constructs a typed RDF literal, associating a string value with a specific XML Schema datatype (\code{xsd}).
+This helper constructs a typed RDF literal, associating a value with any specified
+XML Schema datatype (\code{xsd}) or GeoSPARQL datatype.
 }
 \details{
-Supported datatypes are: \code{"string"}, \code{"integer"}, \code{"decimal"}, \code{"boolean"}, \code{"date"}, \code{"dateTime"}.
+Common datatypes include, but are not limited to:
+
+\strong{String Types:}
+\code{string}, \code{normalizedString}, \code{token}, \code{language}, \code{Name}, \code{NCName}, \code{ID}, \code{IDREF}
+
+\strong{Numeric Types:}
+\code{decimal}, \code{integer}, \code{nonPositiveInteger}, \code{negativeInteger}, \code{long}, \code{int}, \code{short}, \code{byte},
+\code{nonNegativeInteger}, \code{positiveInteger}, \code{unsignedLong}, \code{unsignedInt}, \code{unsignedShort},
+\code{unsignedByte}, \code{double}, \code{float}
+
+\strong{Date and Time Types:}
+\code{dateTime}, \code{dateTimeStamp}, \code{date}, \code{time}, \code{duration}, \code{gYearMonth}, \code{gYear}, \code{gMonthDay},
+\code{gDay}, \code{gMonth}
+
+\strong{Spatial Types:}
+\code{wktLiteral}
+
+\strong{Other Types:}
+\code{boolean}, \code{base64Binary}, \code{hexBinary}, \code{anyURI}
 }
 \examples{
 typed("42", "integer")
 typed("true", "boolean")
-typed("2025-03-30", "date")
-typed("", "integer") # this will return `NULL`
+typed("POINT(30 10)", "wktLiteral")
+typed("", "integer") # Returns NULL
 
 }

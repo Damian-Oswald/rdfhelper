@@ -4,12 +4,14 @@
 \alias{langstring}
 \title{Construct a Language-tagged RDF literal}
 \usage{
-langstring(x, lang = NULL)
+langstring(x, lang = NULL, multiline = FALSE)
 }
 \arguments{
 \item{x}{Character string. The textual content of the literal.}
 
 \item{lang}{Character string. The language tag conforming to \href{https://tools.ietf.org/html/bcp47}{BCP47}. Must be provided.}
+
+\item{multiline}{Logical. Should the language-tagged string be enclosed with triple-double-qoutes (e.g. \verb{"""Hello, world"""@en})? \code{TRUE} allows line breaks within \code{x}.}
 }
 \value{
 A formatted RDF language-tagged literal (\code{rdf:langString}).
