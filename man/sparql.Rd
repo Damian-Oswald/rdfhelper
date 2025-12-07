@@ -4,7 +4,7 @@
 \alias{sparql}
 \title{Execute a SPARQL query against a remote endpoint and get the results}
 \usage{
-sparql(query, endpoint)
+sparql(query, endpoint, accept = "text/csv")
 }
 \arguments{
 \item{query}{A single string containing a valid SPARQL query.  Make sure to
@@ -12,9 +12,18 @@ include any necessary \code{PREFIX} declarations.}
 
 \item{endpoint}{A string giving the full URL of the SPARQL HTTP endpoint
 (e.g. \code{"https://lindas.admin.ch/query"}).}
+
+\item{accept}{Character string. The MIME type indicating the desired response format
+from the server. Common values depend on the query type:
+\itemize{
+\item \code{"text/csv"} (Recommended for SELECT): Returns a tabular result that can be parsed into a data frame.
+\item \code{"text/turtle"} (Recommended for CONSTRUCT): Returns an RDF graph in Turtle format.
+\item \code{"application/json"}: Returns the raw JSON response (often used for both SELECT and ASK queries).
+\item \code{"application/rdf+xml"}: An alternative XML format for graph data.
+}}
 }
 \value{
-A tibble holding the results of the query.
+A tibble holding the results of the query, or a string containing any non-CSV response.
 }
 \description{
 Sends a SPARQL \code{SELECT} (or other) query to the specified SPARQL HTTP endpoint,
@@ -49,6 +58,15 @@ data <- sparql(
   endpoint = "https://lindas.admin.ch/query"
 )
 print(data)
+
+# run a CONSTRUCT query
+sparql('
+  CONSTRUCT { ?s ?p ?o . }
+  WHERE { ?s ?p ?o . }
+  LIMIT 10',
+  endpoint = "https://lindas.admin.ch/query",
+  accept = "text/turtle"
+)
 
 }
 \seealso{

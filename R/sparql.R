@@ -7,8 +7,16 @@
 #'                 include any necessary `PREFIX` declarations.
 #' @param endpoint A string giving the full URL of the SPARQL HTTP endpoint
 #'                 (e.g. `"https://lindas.admin.ch/query"`).
-#'
-#' @return A tibble holding the results of the query.
+#' @param accept   Character string. The MIME type indicating the desired response format 
+#'                 from the server. Common values depend on the query type:
+#'                 \itemize{
+#'                   \item \code{"text/csv"} (Recommended for SELECT): Returns a tabular result that can be parsed into a data frame.
+#'                   \item \code{"text/turtle"} (Recommended for CONSTRUCT): Returns an RDF graph in Turtle format.
+#'                   \item \code{"application/json"}: Returns the raw JSON response (often used for both SELECT and ASK queries).
+#'                   \item \code{"application/rdf+xml"}: An alternative XML format for graph data.
+#'                 }
+#' 
+#' @return A tibble holding the results of the query, or a string containing any non-CSV response.
 #'
 #' @details
 #' - The function uses **httr**’s `POST(..., encode = "form")` under the hood, which
@@ -37,6 +45,15 @@
 #'   endpoint = "https://lindas.admin.ch/query"
 #' )
 #' print(data)
+#' 
+#' # run a CONSTRUCT query
+#' sparql('
+#'   CONSTRUCT { ?s ?p ?o . }
+#'   WHERE { ?s ?p ?o . }
+#'   LIMIT 10',
+#'   endpoint = "https://lindas.admin.ch/query",
+#'   accept = "text/turtle"
+#' )
 #'
 #' @seealso
 #' - [httr::POST()], [httr::content()] for low-level HTTP
@@ -44,11 +61,11 @@
 #'
 #' @importFrom httr POST add_headers content
 #' @export
-sparql <- function(query, endpoint)
+sparql <- function(query, endpoint, accept = "text/csv")
 {
     httr::POST(
         url = endpoint,
-        httr::add_headers(Accept = "text/csv"),
+        httr::add_headers(Accept = accept),
         body = list(query = query),
         encode = "form"
     ) |>
