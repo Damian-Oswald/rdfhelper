@@ -1,1 +1,11 @@
 .DS_Store
+test.*
+notes.*
+*.log
+*.tmp
+.Rhistory
+.RData
+.vscode/
+src/rust/vendor
+src/Makevars
+src/Makevars.win
